@@ -78,7 +78,7 @@ require('lazy').setup({
 
   {
     "kylechui/nvim-surround",
-    version = "*",   -- Use for stability; omit to use `main` branch for the latest features
+    version = "*", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
     config = function()
       require("nvim-surround").setup({
@@ -160,6 +160,9 @@ require('lazy').setup({
     -- Theme inspired by Atom
     'catppuccin/nvim',
     priority = 1000,
+    config = function()
+      vim.cmd.colorscheme 'catppuccin'
+    end,
   },
 
   {
@@ -169,7 +172,7 @@ require('lazy').setup({
     opts = {
       options = {
         icons_enabled = false,
-        theme = 'onedark',
+        theme = 'catppuccin',
         component_separators = '|',
         section_separators = '',
       },
@@ -180,11 +183,14 @@ require('lazy').setup({
     -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
     -- Enable `lukas-reineke/indent-blankline.nvim`
-    -- See `:help indent_blankline.txt`
-    opts = {
-      char = '┊',
-      show_trailing_blankline_indent = false,
-    },
+    -- See `:help ibl`
+    main = 'ibl',
+    opts = {},
+  },
+
+  {
+    "christoomey/vim-tmux-navigator",
+    lazy = false
   },
 
   -- "gc" to comment visual regions/lines
@@ -256,10 +262,10 @@ vim.o.clipboard = 'unnamedplus'
 vim.o.breakindent = true
 
 -- indentation should be 4 spacec
-vim.o.expandtab = true -- expand tab input with spaces characters
+vim.o.expandtab = true   -- expand tab input with spaces characters
 vim.o.smartindent = true -- syntax aware indentations for newline inserts
-vim.o.tabstop = 4 -- num of space characters per tab
-vim.o.shiftwidth = 4 -- spaces per indentation level
+vim.o.tabstop = 4        -- num of space characters per tab
+vim.o.shiftwidth = 4     -- spaces per indentation level
 
 -- Save undo history
 vim.o.undofile = true
@@ -294,10 +300,10 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 
 vim.keymap.set('i', 'jk', "<Esc>", {})
 vim.keymap.set('n', '<leader>ft', "<cmd>Neotree toggle<cr>", { desc = 'open [F]ile [Tree] in neotree' })
-vim.keymap.set('n', '<C-h>', '<C-w>h', { desc = 'Move to left split' })
-vim.keymap.set('n', '<C-j>', '<C-w>j', { desc = 'Move to below split' })
-vim.keymap.set('n', '<C-k>', '<C-w>k', { desc = 'Move to above split' })
-vim.keymap.set('n', '<C-l>', '<C-w>l', { desc = 'Move to right split' })
+--vim.keymap.set('n', '<C-h>', '<C-w>h', { desc = 'Move to left split' })
+--vim.keymap.set('n', '<C-j>', '<C-w>j', { desc = 'Move to below split' })
+--vim.keymap.set('n', '<C-k>', '<C-w>k', { desc = 'Move to above split' })
+--vim.keymap.set('n', '<C-l>', '<C-w>l', { desc = 'Move to right split' })
 vim.keymap.set('n', '<C-Up>', ':resize -2<CR>', { desc = 'Resize split up' })
 vim.keymap.set('n', '<C-Down>', ':resize +2<CR>', { desc = 'Resize split down' })
 vim.keymap.set('n', '<C-Left>', ':vertical resize -2<CR>', { desc = 'Resize split left' })
@@ -615,6 +621,10 @@ yarepl.setup {
     },
   },
 }
+
+-- set background to transparent
+vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
